@@ -1,26 +1,125 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tugas HTML</title>
+    <title>Cerita Fani</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px 15px;
+            font: 16px/1.8 Arial, sans-serif;
+            background-color: #EADBC8;
+            color: #2B1B17;
+        }
+
+        .container {
+            max-width: 650px; /* sebelumnya 800px, ubah angka ini untuk mengatur lebar */
+            margin: auto;
+            background-color: #FAF6F1;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(43, 27, 23, 0.2);
+        }
+
+        .header {
+            padding: 25px 30px;
+            background-color: #D4A373; /* karamel terang */
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 36px;
+            letter-spacing: 3px;
+            color: #3E2723;
+        }
+
+        .hero {
+            height: 300px;
+            background-image: url("foto-fani.jpeg");
+            background-size: cover;
+            background-position: center top;
+            background-color: #EADBC8; /* warna cadangan kalau foto belum muncul */
+            border-bottom: 5px solid #C9A227;
+        }
+
+        .main {
+            padding: 30px;
+        }
+
+        .main h2 {
+            margin: 0 0 10px;
+            padding-bottom: 6px;
+            font-size: 26px;
+            color: #4E342E;
+            border-bottom: 3px solid #C9A227;
+            display: inline-block;
+        }
+
+        .main p {
+            margin: 0 0 30px;
+            font-size: 15px;
+            text-align: justify;
+        }
+
+        .main a {
+            color: #A0522D;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .main a:hover {
+            color: #C9A227;
+            text-decoration: underline;
+        }
+
+        .footer {
+            padding: 15px;
+            text-align: center;
+            font-size: 13px;
+            background-color: #D4A373;
+            color: #3E2723;
+        }
+
+    </style>
 </head>
+
 <body>
 
-    <h1 style="text-align:center;">CERITA FANI</h1>
+    <div class="container">
 
-     <img src="c:\Users\ASUS\Downloads\foto-fani.jpeg" alt="Foto Fani" style="width:500px;">
-     
-    <h2>Perkenalan</h2>
+        <div class="header">
+            <h1>CERITA FANI</h1>
+        </div>
 
-    <p1>Nama saya Stefani Heke Medo biasa disapa Fani. Saya lahir di Laranntuka pada 20 November 2007.
-        Saya memiliki dua saudara laki-laki dan saya adalah anak perempuan satu-satunya di keluarga. 
-        Saat ini saya berkuliah di Universitas Sanata Dharma sebagai mahasiswi semester 3.
-    </p1>
+        <div class="hero"></div>
 
-    <h2 style="text-align:right;">Kehidupan Perkuliahan</h2>
-    <p1 style="text-align:right;">Setelah lulus SMA pada 2025, saya langsung melanjutkan kuliah di Universitas Sanata Dharma. 
-        sebelum mengawali perkuliahan kami mahasiswa baru wajib mengikuti inisiasi dari fakultas dan universitas. Kami dikenalkan seputar lingkungan kampul dan lainnya.
-        dari inisiasi tersebut saya bertemu dengan teman-teman baru dengan berbagai latar belakang yang berbeda. Melewati perkuliahan semester satu dan semester dua 
-        cukup melelahkan buat saya. Namun karena dukungan dari orang sekitar, saya bisa melewati kesulitan-kesulitan tersebut.
-    </p1>
+        <div class="main">
+            <h2>Perkenalan</h2>
+
+            <p>Nama saya Stefani Heke Medo, biasa disapa Fani. Saya lahir di
+            <a href="https://www.idntimes.com/travel/destination/fakta-menarik-larantuka-ntt-agp-c1c2-01-gcvvx-1gjy6s" target="_blank">Larantuka</a>
+            pada 20 November 2007. Saya memiliki dua saudara laki-laki dan saya adalah anak perempuan satu-satunya di keluarga.
+            Saat ini saya berkuliah di Universitas Sanata Dharma sebagai mahasiswi semester 3.</p>
+
+            <h2>Kehidupan Perkuliahan</h2>
+
+            <p>Setelah lulus SMA pada 2025, saya langsung melanjutkan kuliah di Universitas Sanata Dharma.
+            Sebelum mengawali perkuliahan, kami mahasiswa baru wajib mengikuti inisiasi dari fakultas dan universitas.
+            Kami dikenalkan seputar lingkungan kampus dan lainnya. Dari inisiasi tersebut, saya bertemu dengan teman-teman baru
+            dengan berbagai latar belakang yang berbeda. Melewati perkuliahan semester satu dan semester dua
+            cukup melelahkan buat saya. Namun, karena dukungan dari orang sekitar, saya bisa melewati kesulitan-kesulitan tersebut.</p>
+        </div>
+
+        <div class="footer">
+            <p class="copy">2026 Stefani Heke Medo</p>
+        </div>
+
+    </div>
+
 </body>
 </html>
