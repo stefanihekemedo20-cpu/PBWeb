@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tugas 4</title>
+
+  <style>
+    /*Tampilan dasar halaman */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      line-height: 1.6;
+      background-color: #eef5f4;           
+    }
+
+    /* Kotak putih utama yang membungkus seluruh isi halaman */
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* Header */
+    .header-box {
+      border: 2px solid #134e4a;            
+      padding: 15px;
+      margin-bottom: 20px;
+      display: flex;                        
+      align-items: center;
+      gap: 20px;
+      border-radius: 5px;
+    }
+    .header-box img {
+      width: 80px;
+      height: 100px;
+      object-fit: cover;                    
+      border: 1px solid #ccc;
+    }
+
+    /* Kotak untuk setiap langkah */
+    .form-step {
+      margin-top: 15px;
+      padding: 15px;
+      border-left: 4px solid #0d9488;       
+      background-color: #f0f9f8;           
+      border-radius: 4px;
+    }
+    .input-group {
+      margin-bottom: 12px;
+    }
+    label {
+      display: inline-block;
+      width: 130px;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="number"], input[type="email"], select {
+      padding: 6px 10px;
+      width: 220px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    /* Tombol OK */
+    button {
+      padding: 6px 16px;
+      margin-top: 8px;
+      background-color: #0d9488;            
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0f766e;           
+    }
+
+    /* Kotak hasil akhir */
+    .result-box {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #ccfbf1;           
+      color: #134e4a;                      
+      border: 1px solid #5eead4;           
+      border-radius: 5px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER: Foto, Nama, NIM  -->
+  <div class="header-box">
+    <img src="foto-fani.jpeg" alt="Foto Fani">
+    <div>
+      <h3 style="margin: 0;">Stefani Heke Medo</h3>
+      <p style="margin: 5px 0;">NIM: 255314120</p>
+    </div>
+  </div>
+
+  <!-- LANGKAH 1: Input Nama + Jumlah Pilihan -->
+  <div id="step1" class="form-step">
+    <div class="input-group">
+      <label for="nama">Nama :</label>
+      <input type="text" id="nama" placeholder="Masukkan Nama">
+    </div>
+    <div class="input-group">
+      <label for="jml">Jumlah Pilihan :</label>
+      <input type="number" id="jml" min="1" placeholder="Masukkan Angka">
+    </div>
+    <button type="button" onclick="prosesStep1()">OK</button>
+  </div>
+
+  <!-- LANGKAH 2: Input teks pilihan (dibuat oleh JavaScript) -->
+  <div id="step2" class="form-step" style="display: none;">
+    <div id="containerPilihanInput"></div> 
+    <button type="button" onclick="prosesStep2()">OK</button>
+  </div>
+
+  <!-- LANGKAH 3: Radio Button dan Drop Down -->
+  <div id="step3" class="form-step" style="display: none;">
+    <p><strong>Pilih salah satu opsi:</strong></p>
+    <div id="containerRadio" class="input-group"></div>  
+
+    <p><strong>Atau pilih dari Drop-down:</strong></p>
+    <select id="dropdownPilihan"></select>             
+    <br>
+    <button type="button" onclick="prosesStep3()">OK</button>
+  </div>
+
+  <!-- LANGKAH 4: Input Email -->
+  <div id="step4" class="form-step" style="display: none;">
+    <div class="input-group">
+      <label for="email">Email :</label>
+      <input type="email" id="email" placeholder="email@domain.com">
+    </div>
+    <button type="button" onclick="prosesStep4()">OK</button>
+  </div>
+
+  <!-- LANGKAH 5: Output akhir  -->
+  <div id="step5" class="result-box" style="display: none;">
+    <p id="hasilTeks"></p>   <!-- kalimat hasil ditulis ke sini lewat DOM -->
+  </div>
+</div>
+
+<script>
+ 
+  let data = {
+    nama: "",
+    jml: 0,
+    pilihanList: [],       
+    pilihanTerpilih: "",
+    email: ""
+  };
+
+  /*Validasi Nama dan Jumlah Pilihan, lalu buat kolom pilihan */
+  function prosesStep1() {
+    // Ambil nilai input; trim() membuang spasi di awal/akhir
+    const namaInput = document.getElementById("nama").value.trim();
+    // parseInt() mengubah teks menjadi bilangan bulat 
+    const jmlInput = parseInt(document.getElementById("jml").value);
+
+    //nama tidak boleh kosong
+    if (namaInput === "") {
+      alert("Error: Nama tidak boleh kosong!");
+      return;   // hentikan fungsi, langkah berikutnya tidak muncul
+    }
+
+    //jumlah harus angka dan lebih dari 0
+    if (isNaN(jmlInput) || jmlInput <= 0) {
+      alert("Error: Jumlah Pilihan harus berupa angka dan lebih besar dari 0!");
+      return;
+    }
+
+    //Simpan ke objek data
+    data.nama = namaInput;
+    data.jml = jmlInput;
+
+    //Kunci input langkah 1 supaya tidak bisa diubah lagi
+    document.getElementById("nama").disabled = true;
+    document.getElementById("jml").disabled = true;
+
+    //buat kolom teks sebanyak jumlah pilihan
+    const container = document.getElementById("containerPilihanInput");
+    container.innerHTML = "";
+    for (let i = 1; i <= data.jml; i++) {
+      container.innerHTML += `
+        <div class="input-group">
+          <label for="pilih_${i}">Pilihan ${i} :</label>
+          <input type="text" id="pilih_${i}" placeholder="Teks Pilihan ${i}">
+        </div>
+      `;
+    }
+
+    document.getElementById("step2").style.display = "block";
+  }
+
+  /*
+     LANGKAH 2: Ambil semua teks pilihan, simpan ke array, buat radio & drop-down */
+  function prosesStep2() {
+    let tempPilihan = [];//array sementara untuk menampilkan pilihan
+
+    //baca setiap kolom pilihan
+    for (let i = 1; i <= data.jml; i++) {
+      const val = document.getElementById(`pilih_${i}`).value.trim();
+
+      // tidak boleh ada kolom kosong
+      if (val === "") {
+        alert(`Error: Pilihan ${i} belum diisi! Silakan masukan ulang.`);
+        return;
+      }
+      tempPilihan.push(val);//masukkan teks ke array
+    }
+
+    // Simpan array sementara ke array utama
+    data.pilihanList = tempPilihan;
+
+    //Kunci semua kolom pilihan
+    for (let i = 1; i <= data.jml; i++) {
+      document.getElementById(`pilih_${i}`).disabled = true;
+    }
+
+    const containerRadio = document.getElementById("containerRadio");
+    const dropdown = document.getElementById("dropdownPilihan");
+
+    //Kosongkan dulu agar tidak menumpuk
+    containerRadio.innerHTML = "";
+    dropdown.innerHTML = "";
+
+    //buat satu radio button dan satu option untuk tiap pilihan
+    data.pilihanList.forEach((teks, index) => {
+      // Radio button; yang pertama (index 0) otomatis terpilih
+      containerRadio.innerHTML += `
+        <div style="margin-bottom: 5px;">
+          <input type="radio" id="radio_${index}" name="pilihanOpsi" value="${teks}" ${index === 0 ? 'checked' : ''}>
+          <label for="radio_${index}" style="width: auto;">${teks}</label>
+        </div>
+      `;
+
+      //Drop-down option
+      dropdown.innerHTML += `<option value="${teks}">${teks}</option>`;
+    });
+
+    // Tampilkan langkah 3
+    document.getElementById("step3").style.display = "block";
+  }
+
+  /* Ambil pilihan yang dipilih pengguna */
+  function prosesStep3() {
+    // Cari radio button yang sedang tercentang
+    const selectedRadio = document.querySelector('input[name="pilihanOpsi"]:checked');
+
+    //harus ada yang dipilih
+    if (!selectedRadio) {
+      alert("Error: Silakan pilih salah satu opsi!");
+      return;
+    }
+
+    // Simpan nilai pilihan
+    data.pilihanTerpilih = selectedRadio.value;
+
+    // Kunci semua radio button dan drop-down
+    const radios = document.getElementsByName("pilihanOpsi");
+    radios.forEach(r => r.disabled = true);
+    document.getElementById("dropdownPilihan").disabled = true;
+
+    // Tampilkan langkah 4
+    document.getElementById("step4").style.display = "block";
+  }
+
+  /* Validasi email lalu tampilkan hasil */
+  function prosesStep4() {
+    const emailInput = document.getElementById("email").value.trim();
+    
+    //Pola email teks, lalu @, lalu teks, lalu titik, lalu teks
+    //[^\s@]+ artinya satu karakter atau lebih selain spasi dan @
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    //Pattern matching: test() mengembalikan true jika cocok dengan pola
+    if (!emailPattern.test(emailInput)) {
+      alert("Error: Format email tidak valid! Silakan masukkan email yang benar (contoh: email@domain.com).");
+      return;//pengguna diminta memasukkan ulang
+    }
+
+    //Simpan email dan kunci kolomnya
+    data.email = emailInput;
+    document.getElementById("email").disabled = true;
+
+    //Susun daftar pilihan dengan format: A, B, dan C
+    let daftarPilihanTeks = "";
+    if (data.pilihanList.length === 1) {
+      //Hanya satu pilihan: tulis apa adanya
+      daftarPilihanTeks = data.pilihanList[0];
+    } else {
+      //slice(0, -1) = semua elemen kecuali yang terakhir; join(", ") = gabung dengan koma
+      const opsiAwal = data.pilihanList.slice(0, -1).join(", ");
+      const opsiTerakhir = data.pilihanList[data.pilihanList.length - 1];
+      daftarPilihanTeks = `${opsiAwal}, dan ${opsiTerakhir}`;
+    }
+
+    //Susun kalimat akhir
+    const hasilKalimat = `Hallo, nama saya ${data.nama}, email ${data.email} saya mempunyai sejumlah ${data.jml} pilihan yaitu ${daftarPilihanTeks}, dan saya memilih ${data.pilihanTerpilih}`;
+
+    //tulis kalimat ke elemen <p id="hasilTeks"> lalu tampilkan kotak hasil
+    document.getElementById("hasilTeks").innerText = hasilKalimat;
+    document.getElementById("step5").style.display = "block";
+  }
+</script>
+
+</body>
+</html>
